@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
+const utils_1 = require("../utils");
+Object.defineProperty(exports, "router", { enumerable: true, get: function () { return utils_1.router; } });
+const blog_1 = require("../controllers/blog");
+utils_1.router.get("/", blog_1.getBlogs);
+utils_1.router.get("/:bid", blog_1.getBlogById);
+utils_1.router.put("/:bid", blog_1.putBlog);
+utils_1.router.put("/:bid/image/:mid", blog_1.deleteBlogImage);
+utils_1.router.put("/addimage/:bid", blog_1.addBlogImage);
+utils_1.router.put("/:bid/section/:sid", blog_1.updateSection);
+utils_1.router.put("/:bid/createsection/", blog_1.addSection);
+utils_1.router.post("/", blog_1.postBlog);
+utils_1.router.delete("/:bid", blog_1.deleteBlog);

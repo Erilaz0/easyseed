@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
+const utils_1 = require("../utils");
+Object.defineProperty(exports, "router", { enumerable: true, get: function () { return utils_1.router; } });
+const plants_1 = require("../controllers/plants");
+utils_1.router.get("/plants", plants_1.getPlants);
+utils_1.router.get("/plants/:pid", plants_1.getPlantById);
+utils_1.router.post("/plants", plants_1.postPlants);
+utils_1.router.put("/plants/:pid", plants_1.putPlants);
+utils_1.router.delete("/plants/:pid", plants_1.deletePlant);

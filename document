@@ -1,0 +1,27 @@
+En el postPlants si se envia "plants":{} sin las comillas me sale este error : SyntaxError: Unexpected token p in JSON at position 1
+   
+   
+    at JSON.parse (<anonymous>)
+    at parse (C:\Users\Usuario\OneDrive\Escritorio\greenlaz\node_modules\body-parser\lib\types\json.js:89:19)
+    at C:\Users\Usuario\OneDrive\Escritorio\greenlaz\node_modules\body-parser\lib\read.js:128:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:204:9)
+    at invokeCallback (C:\Users\Usuario\OneDrive\Escritorio\greenlaz\node_modules\raw-body\index.js:231:16)
+    at done (C:\Users\Usuario\OneDrive\Escritorio\greenlaz\node_modules\raw-body\index.js:220:7)
+    at IncomingMessage.onEnd (C:\Users\Usuario\OneDrive\Escritorio\greenlaz\node_modules\raw-body\index.js:280:7)
+    at IncomingMessage.emit (node:events:513:28)
+    at endReadableNT (node:internal/streams/readable:1359:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+Por mas q hagamos validaciones de que si es un objeto o esto y lo otro nos pasa error igual, hay q asegurarnos que desde ract se envie bien
+
+
+
+
+
+
+
+
+
+
+WINSTONE:
+en winstone tenemos q usar any en el middelware y al usarlo en cada controlador tenems q definir una vriable para el todo el tiempo, ya que logger no es reconocido por ts como un objeto en request , y seria contraproducente ponerle any a todos los request y response ya que habria muchos mas any que si solo dejamos en any al valor del req del loger, ya q en este caso en el q literlamente no se reconoce el valor de logger por la request no queda de otra q usar any, aun asi es necsesario evitar su uso lo mas posible
