@@ -8,11 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteBlog = exports.deleteBlogImage = exports.addSection = exports.updateSection = exports.addBlogImage = exports.putBlog = exports.postBlog = exports.getBlogById = exports.getBlogs = void 0;
+exports.setLikesEmail = exports.deleteBlog = exports.deleteBlogImage = exports.addSection = exports.updateSection = exports.addBlogImage = exports.putBlog = exports.postBlog = exports.getBlogById = exports.getBlogs = void 0;
 const utils_1 = require("../utils");
 const blog_services_1 = require("../services/blog.services");
 const Validator_1 = require("../validators/Validator");
+const send_1 = __importDefault(require("../mailing/send"));
 function getBlogs(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const page = parseInt(req.query.page);
@@ -228,6 +232,45 @@ function updateSection(req, res) {
     });
 }
 exports.updateSection = updateSection;
+function setLikesEmail(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const log = req.logger;
+        const { data } = req.body;
+        const bid = req.params.bid;
+        const setEmail = data.email;
+        if (!utils_1.mongoose.Types.ObjectId.isValid(bid)) {
+            res.status(400).json({ error: "Not valid BID" });
+        }
+        else {
+            const getBlog = yield blog_services_1.blogServices.getBlogById(bid);
+            if (!getBlog) {
+                res.status(400).json({ error: `Cnnot find blog by id ${bid}` });
+            }
+            else {
+                const verifyEmials = getBlog.likes.emails.find((email) => email.email === setEmail);
+                if (verifyEmials) {
+                    res.status(400).json({ error: `This email already exists` });
+                }
+                else {
+                    const likesUpload = yield blog_services_1.blogServices.setLikes(bid, setEmail);
+                    if (likesUpload) {
+                        (0, send_1.default)(setEmail)
+                            .then((data) => log.debug(data))
+                            .catch((error) => log.debug(error));
+                        res.status(200).json({ message: "success" });
+                    }
+                    else if (!likesUpload) {
+                        res.status(400).json({ message: "error, cannot upload" });
+                    }
+                    else {
+                        res.status(400).json({ message: "error, cannot upload" });
+                    }
+                }
+            }
+        }
+    });
+}
+exports.setLikesEmail = setLikesEmail;
 function addSection(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;

@@ -81,6 +81,18 @@ async paginateBlog( page : number , limit : number ){
 
   return await this.dao.blogPaginate( page , limit)
 }
+
+
+async setLikes( bid : string , email : string ){
+
+  return await this.dao.setLikes( bid , email )
+}
+
+
+
+
+
+
   
 }
 

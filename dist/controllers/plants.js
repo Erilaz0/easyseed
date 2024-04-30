@@ -34,7 +34,6 @@ function getPlants(req, res) {
             (0, plantsquerys_1.handleSort)(sort, res);
         }
         else if (water && typeof water === "string" && water === "Daily" || water === "Frequently" || water === "Infrequently" && limit) {
-            console.log(water);
             (0, plantsquerys_1.handleWater)(water, page, limit, res);
         }
         else if (price && typeof price === "number") {
@@ -90,15 +89,17 @@ exports.getPlantById = getPlantById;
 function postPlants(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
-        const { common_name, scientific_name, thumbnail, species, life_time, price, light, water, special_needs } = req.body;
+        const { common_name, scientific_name, thumbnail, species, life_time, price, light, water, special_needs, stock } = req.body;
         let { created_at } = req.body;
-        if (!common_name || !scientific_name || !thumbnail || !species || !life_time || !price || !light || !water || !special_needs) {
+        console.log(req.body);
+        console.log("post");
+        if (!common_name || !scientific_name || !thumbnail || !species || !life_time || !price || !light || !water || !special_needs || !stock) {
             log.debug("Complete all required fields");
             return res.status(400).json({ message: "Complete all required fields" });
         }
         else {
             created_at = JSON.stringify(new Date());
-            let newPlant = { common_name, scientific_name, thumbnail, species, life_time, price, light, water, special_needs, created_at };
+            let newPlant = { common_name, scientific_name, thumbnail, species, life_time, price, light, water, special_needs, stock, created_at };
             const validateNewPlant = (0, Validator_1.validatePlant)(newPlant);
             log.debug("Starting new plant validation");
             if (validateNewPlant === true) {

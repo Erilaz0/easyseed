@@ -60,6 +60,15 @@ class blogDao{
  }
 
 
+ async setLikes( bid : string , email : string ){
+
+   return await blogModel.updateOne( { _id : bid } , {  $inc : { "likes.quantity" : 1 } , $push : { "likes.emails" : { email : email } } } )
+ }
+
+
+
+
+
  async createSection( bid : string , section : object ){
 
     return await blogModel.updateOne( { _id : bid } , { $push : { sections :  section } } )
@@ -74,8 +83,11 @@ class blogDao{
 
  async blogPaginate( page : number , limit : number ){
 
-   return await blogModel.paginate( {} , { page : page , limit : limit , lean  : true})
+   return await blogModel.paginate( {} , { page : page , limit : limit , lean  : true } )
  }
+
+
+
 }
 
 export { blogDao }

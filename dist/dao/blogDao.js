@@ -58,6 +58,11 @@ class blogDao {
             return yield blogModel.updateOne({ _id: bid, "sections._id": sid }, { $set: { "sections.$.description": description } });
         });
     }
+    setLikes(bid, email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield blogModel.updateOne({ _id: bid }, { $inc: { "likes.quantity": 1 }, $push: { "likes.emails": { email: email } } });
+        });
+    }
     createSection(bid, section) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield blogModel.updateOne({ _id: bid }, { $push: { sections: section } });

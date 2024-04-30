@@ -35,7 +35,9 @@ const plantValidator = {
         water : { type : "string" },
         
         special_needs : { type : "string" },
-        
+
+        stock : { type : "number" },  
+
         created_at : { type : "string" }
     },
     

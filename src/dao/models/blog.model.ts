@@ -14,7 +14,7 @@ const blogSchema = new Schema({
   
   sections : [ { subtitle : { type : String , required : true} , description : { type : String , required : true } , image : { type : String , default : "none"} } ],
   
-  likes : { type : Number , default : 0 },
+  likes :  { quantity : { type : Number } , emails : [ { email : { type : String } } ] } ,
   
   published : { type : Boolean , default : true },
   

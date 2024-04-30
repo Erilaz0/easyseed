@@ -17,6 +17,8 @@ export interface plant {
     water : string ,
     
     special_needs : string ,
+
+    stock : string ,
     
     created_at : string 
 

@@ -50,7 +50,7 @@ class plantsDao {
     }
     sortPlants(sort) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield plantsModel.aggregate([{ $sort: { price: sort } }]);
+            return yield plantsModel.paginate.aggregate([{ $sort: { price: sort } }]);
         });
     }
     plantsByPrice(price, page) {

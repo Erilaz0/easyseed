@@ -9,7 +9,8 @@ import { handleSpecies , handleLight , handleSort, handlePrice, handlePagination
 
 
 
-//species , pagination , poca luz : luz indirecta o semisombra , mucha luz : luz directa
+
+
 
 
 
@@ -25,8 +26,8 @@ async function getPlants( req : Request  , res : Response ){
   let sort = parseInt(req.query.sort as string)
   let price = parseInt(req.query.price as string)
   let water = req.query.water
-  
-  
+
+
   
 
 
@@ -58,15 +59,19 @@ async function getPlants( req : Request  , res : Response ){
 
   }
   else if( page && typeof page === "number" ){
-
+   
     handlePagination( page , res )
+   
+    
   }
   else{
 
     
    log.debug("Getting all plants from DB")
+  
 
    const plants : plant[] = await plantsService.getPlants()
+
   
  
     if(!plants){
@@ -146,12 +151,14 @@ if(!mongoose.Types.ObjectId.isValid(id)){
 async function postPlants( req : Request , res : Response ){
 
 const log = ( req as any ).logger
-const { common_name , scientific_name , thumbnail , species , life_time , price , light , water , special_needs } = req.body
+const { common_name , scientific_name , thumbnail , species , life_time , price , light , water , special_needs , stock } = req.body
 let { created_at } = req.body
+console.log(req.body)
+console.log("post")
  
 
 
-if( !common_name || !scientific_name || !thumbnail || !species || !life_time || !price || !light || !water || !special_needs ){
+if( !common_name || !scientific_name || !thumbnail || !species || !life_time || !price || !light || !water || !special_needs || !stock ){
  
  log.debug("Complete all required fields")
  return res.status(400).json({ message : "Complete all required fields"})
@@ -160,7 +167,7 @@ if( !common_name || !scientific_name || !thumbnail || !species || !life_time || 
 }else{
   
   created_at  = JSON.stringify(new Date())
-  let newPlant : plant  = { common_name , scientific_name , thumbnail , species , life_time , price , light , water , special_needs , created_at }
+  let newPlant : plant  = { common_name , scientific_name , thumbnail , species , life_time , price , light , water , special_needs , stock , created_at }
   const validateNewPlant = validatePlant(newPlant)
   
   log.debug("Starting new plant validation")

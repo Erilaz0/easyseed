@@ -22,6 +22,7 @@ const plantValidator = {
         light: { type: "string" },
         water: { type: "string" },
         special_needs: { type: "string" },
+        stock: { type: "number" },
         created_at: { type: "string" }
     },
     required: ['common_name', 'scientific_name', 'species', 'life_time', 'price', 'light', 'water', 'special_needs', 'created_at', 'thumbnail']

@@ -14,9 +14,11 @@ const plantsSchema = new mongoose_1.default.Schema({
     life_time: { type: Number, required: true },
     price: { type: Number, required: true },
     light: { type: String, required: true },
+    stock: { type: Number, default: 0 },
     water: { type: String, required: true },
     special_needs: { type: String, required: true },
     created_at: { type: String, required: true },
+    recommended: { type: Boolean, default: false }
 });
 plantsSchema.plugin(mongoose_paginate_v2_1.default);
 const plantsModel = mongoose_1.default.model(plantsCollection, plantsSchema);

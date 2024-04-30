@@ -1,6 +1,6 @@
 import { router } from "../utils";
-import { postBlog , getBlogs , getBlogById , putBlog , addBlogImage , updateSection , addSection , deleteBlogImage , deleteBlog } from "../controllers/blog";
-
+import { postBlog , getBlogs , getBlogById , putBlog , addBlogImage , updateSection , addSection , deleteBlogImage , deleteBlog, setLikesEmail } from "../controllers/blog";
+import adminVerify from "../middlewares/admin_token"
 
 router.get("/" , getBlogs )
 
@@ -8,25 +8,28 @@ router.get("/" , getBlogs )
 router.get("/:bid" , getBlogById )
 
 
-router.put("/:bid" , putBlog )
+router.put("/:bid" , adminVerify , putBlog )
 
 
-router.put("/:bid/image/:mid" , deleteBlogImage )
+router.put("/:bid/image/:mid" , adminVerify , deleteBlogImage )
 
 
-router.put("/addimage/:bid" , addBlogImage )
+router.put("/addimage/:bid" , adminVerify , addBlogImage )
 
 
-router.put("/:bid/section/:sid" , updateSection )
+router.put("/:bid/section/:sid" , adminVerify , updateSection )
 
 
-router.put("/:bid/createsection/" , addSection )
+router.put("/:bid/createsection/" , adminVerify , addSection )
 
 
-router.post("/" , postBlog )
+router.put("/:bid/setlikes/" , setLikesEmail )
 
 
-router.delete("/:bid" , deleteBlog )
+router.post("/" , adminVerify , postBlog )
+
+
+router.delete("/:bid" , adminVerify , deleteBlog )
 
 
 

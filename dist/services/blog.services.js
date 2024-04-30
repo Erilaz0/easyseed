@@ -75,6 +75,11 @@ class blogService {
             return yield this.dao.blogPaginate(page, limit);
         });
     }
+    setLikes(bid, email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.dao.setLikes(bid, email);
+        });
+    }
 }
 const daoBlog = new blogDao_1.blogDao();
 const blogServices = new blogService(daoBlog);

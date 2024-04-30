@@ -21,6 +21,8 @@ price :{ type : Number , required : true },
 
 light : { type : String , required : true }, 
 
+stock : { type : Number , default : 0 },
+
 water : { type : String , required : true },
 
 special_needs : { type : String , required : true },

@@ -3,8 +3,7 @@ import { blog } from "../interfaces/blog.interface"
 import { blogServices } from "../services/blog.services"
 import { Request , Response } from "../utils"
 import { validateBlog } from "../validators/Validator"
-import { Mongoose, isValidObjectId } from "mongoose"
-import { log } from "winston"
+import  likesAdviceEmail  from "../mailing/send"
 
 
 
@@ -16,6 +15,7 @@ async function getBlogs( req : Request , res : Response){
     
     const page : number = parseInt(req.query.page as string)
     const limit : number = parseInt(req.query.limit as string)
+
     
 
     if(page && typeof page === "number" || limit && typeof limit === "number"){
@@ -372,6 +372,54 @@ async function updateSection( req : Request , res : Response ){
 
 
 
+async function setLikesEmail( req : Request , res : Response ){
+
+  const log = ( req as any ).logger
+  const { data } = req.body
+  const bid = req.params.bid
+
+  const setEmail : string = data.email
+  if( !mongoose.Types.ObjectId.isValid( bid )){
+
+    res.status(400).json( { error : "Not valid BID" } )
+  }
+  else{
+
+    const getBlog = await blogServices.getBlogById( bid )
+    if( !getBlog ){
+      res.status(400).json( { error : `Cnnot find blog by id ${bid}` } )
+    }
+    else{
+      const verifyEmials = getBlog.likes.emails.find( ( email : any ) => email.email === setEmail )
+      
+      if(verifyEmials){
+
+        res.status(400).json( { error : `This email already exists`} )
+      }
+      else{
+      
+      
+        const likesUpload = await blogServices.setLikes( bid , setEmail )
+        if( likesUpload ){
+
+          likesAdviceEmail( setEmail )
+          .then( ( data ) => log.debug( data ) )
+          .catch( ( error )=> log.debug(error) )
+          
+          res.status(200).json( { message : "success"} )
+        }
+        else if( !likesUpload ){
+
+          res.status(400).json( { message : "error, cannot upload"} )
+        }
+        else{
+          res.status(400).json( { message : "error, cannot upload"} )
+       }
+     }
+    }
+  }
+}
+
 
 
 
@@ -453,4 +501,4 @@ async function deleteBlog( req : Request , res : Response ){
 
 
 
-export { getBlogs , getBlogById , postBlog , putBlog , addBlogImage , updateSection , addSection , deleteBlogImage , deleteBlog }
+export { getBlogs , getBlogById , postBlog , putBlog , addBlogImage , updateSection , addSection , deleteBlogImage , deleteBlog , setLikesEmail }
