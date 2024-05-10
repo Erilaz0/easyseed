@@ -16,6 +16,8 @@ const utils_1 = require("../utils");
 const plantsquerys_1 = require("./functions_controller/plantsquerys");
 function getPlants(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log("plaaaaants");
+        console.log(req.path);
         const log = req.logger;
         const species = req.query.species;
         const light = req.query.light;

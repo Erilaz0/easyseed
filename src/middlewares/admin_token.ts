@@ -8,6 +8,7 @@ async function adminVerify( req : Request , res : Response , next : any ){
     const secret = "32bSg3H73R7antXUpVs234-i43p43arF6BG9F69bPvaf94gRuTdN8uFvhvM9ZS9jYD5P96Xu8"
     const log = ( req as any ).logger
     log.debug("Starting token validation..")
+    log.debug(adminCookie)
 
 
 
@@ -17,6 +18,7 @@ async function adminVerify( req : Request , res : Response , next : any ){
         
 
         if(error){
+            console.log(error)
             log.debug("\u2716  Invalid token")
             res.status(400).json( { error : "Invalid token"} )
         }

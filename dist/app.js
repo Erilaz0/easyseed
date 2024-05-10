@@ -15,12 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = require("./utils");
 const utils_2 = require("./utils");
 const cors_1 = __importDefault(require("cors"));
-const plants_router_1 = require("./router/plants.router");
-const blog_router_1 = require("./router/blog.router");
-const login_router_1 = require("./router/login.router");
+const chat_router_1 = __importDefault(require("./router/chat.router"));
+const plants_router_1 = __importDefault(require("./router/plants.router"));
+const blog_router_1 = __importDefault(require("./router/blog.router"));
+const login_router_1 = __importDefault(require("./router/login.router"));
 const winstone_1 = require("./middlewares/winstone");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const socket_io_1 = require("socket.io");
+const chat_services_1 = __importDefault(require("./services/chat.services"));
 const path = require("path");
 const PORT = 8080;
 const app = (0, utils_1.express)();
@@ -33,9 +35,10 @@ app.use((0, cors_1.default)({
     origin: 'http://localhost:5173',
     credentials: true
 }));
-app.use("/login", login_router_1.router);
-app.use("/home", plants_router_1.router);
-app.use("/blog", blog_router_1.router);
+app.use("/blogs", blog_router_1.default);
+app.use("/login", login_router_1.default);
+app.use("/chats", chat_router_1.default);
+app.use("/plants", plants_router_1.default);
 const serverExpress = app.listen(PORT, () => {
     console.log(`SERVER RUNNING ON PORT ${PORT}`);
 });
@@ -50,7 +53,57 @@ const serverSocket = new socket_io_1.Server(serverExpress, {
     }
 });
 serverSocket.on("connection", sock => {
-    sock.on("client_message", (message) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(message);
+    sock.on("client_message", (message_data) => __awaiter(void 0, void 0, void 0, function* () {
+        const messagesData = message_data.data;
+        const date = new Date().toISOString();
+        let rol = messagesData.rol;
+        const message = messagesData.message;
+        const uid = message_data.uid;
+        if (uid) {
+            const findChat = yield chat_services_1.default.getChatByUID(uid);
+            if (findChat && findChat.length > 0) {
+                const addMessage = yield chat_services_1.default.addMessage(uid, message, rol, date);
+                if (!addMessage) {
+                    console.log("cannot add message");
+                }
+                else {
+                    const send_new_message = { uid: uid, messages: { message: message, rol: rol, date: date } };
+                    sock.emit("addNewMessage", send_new_message);
+                    console.log("una vesss");
+                    serverSocket.emit("admin_message", send_new_message);
+                    console.log("mesnaje añadido a chat existente");
+                }
+            }
+            else {
+                const newChat = yield chat_services_1.default.createChat(uid, message, rol, date);
+                if (!newChat) {
+                    console.log("cannot create chat");
+                }
+                else {
+                    console.log("chat created");
+                }
+            }
+        }
+        else {
+            console.log("no uid socket");
+        }
+    }));
+    sock.on("admin_response", (response) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log("una ves");
+        const messagesData = response.data;
+        const date = new Date().toISOString();
+        let rol = messagesData.rol;
+        const message = messagesData.message;
+        const uid = response.uid;
+        if (uid) {
+            const findChat = yield chat_services_1.default.getChatByUID(uid);
+            if (findChat) {
+                const addMessage = yield chat_services_1.default.addMessage(uid, message, rol, date);
+                if (addMessage) {
+                    const send_new_message = { uid: uid, messages: { message: message, rol: rol, date: date } };
+                    serverSocket.emit("admin_message", send_new_message);
+                }
+            }
+        }
     }));
 });

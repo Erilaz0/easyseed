@@ -5,8 +5,16 @@ import { mongoose } from "../../utils";
 const chatCollection : string = "users-chat"
 const chatSchema = new mongoose.Schema({
 
-    uid : { type : String , required : true },
-    messages : { message : { type : String } , user : { type : String }}
+    uid : { 
+        type : String , required : true
+     },
+    messages : [{
+        message : { type : String } , 
+        rol : { type : String },
+        date : { type : String },
+      }]
+       
+    
 
 })
 

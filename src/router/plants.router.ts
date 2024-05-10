@@ -3,16 +3,16 @@ import { getPlants , postPlants , getPlantById , putPlants , deletePlant } from 
 import  adminVerify  from "../middlewares/admin_token"
 
 
+console.log("plants router")
 
+router.get( "/allplants" , getPlants )
 
-router.get( "/plants" , getPlants )
+router.get( "/plant/:pid" , getPlantById )
 
-router.get( "/plants/:pid" , getPlantById )
+router.post("/" , adminVerify , postPlants )
 
-router.post("/plants" , adminVerify , postPlants )
+router.put("/:pid" , adminVerify , putPlants )
 
-router.put("/plants/:pid" , adminVerify , putPlants )
+router.delete("/:pid" , adminVerify , deletePlant )
 
-router.delete("/plants/:pid" , adminVerify , deletePlant )
-
-export { router }
+export default router 

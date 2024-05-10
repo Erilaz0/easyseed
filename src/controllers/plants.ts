@@ -16,7 +16,8 @@ import { handleSpecies , handleLight , handleSort, handlePrice, handlePagination
 
 async function getPlants( req : Request  , res : Response ){
 
-
+console.log("plaaaaants")
+console.log(req.path)
   const log = ( req as any ).logger
   
   const species = req.query.species

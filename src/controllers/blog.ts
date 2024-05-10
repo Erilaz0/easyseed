@@ -75,6 +75,7 @@ async function getBlogById( req : Request , res : Response ){
 
 const log = ( req as any).logger
 const id = req.params.bid
+console.log(id)
 
 if( !id || !mongoose.Types.ObjectId.isValid(id) ){
 

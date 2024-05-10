@@ -52,6 +52,7 @@ function getBlogById(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
         const id = req.params.bid;
+        console.log(id);
         if (!id || !utils_1.mongoose.Types.ObjectId.isValid(id)) {
             log.debug("Not valid bid");
             res.status(400).json({ error: "Not valid bid" });

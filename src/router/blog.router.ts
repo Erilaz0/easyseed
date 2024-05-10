@@ -2,13 +2,16 @@ import { router } from "../utils";
 import { postBlog , getBlogs , getBlogById , putBlog , addBlogImage , updateSection , addSection , deleteBlogImage , deleteBlog, setLikesEmail } from "../controllers/blog";
 import adminVerify from "../middlewares/admin_token"
 
-router.get("/" , getBlogs )
+
+console.log(" router")
+
+router.get("/allblogs" , getBlogs )
 
 
-router.get("/:bid" , getBlogById )
+router.get("/blog/:bid" , getBlogById )
 
 
-router.put("/:bid" , adminVerify , putBlog )
+router.put("/blog/update/:bid" , adminVerify , putBlog )
 
 
 router.put("/:bid/image/:mid" , adminVerify , deleteBlogImage )
@@ -35,4 +38,4 @@ router.delete("/:bid" , adminVerify , deleteBlog )
 
 
 
-export { router }
+export default router 

@@ -25,3 +25,14 @@ Por mas q hagamos validaciones de que si es un objeto o esto y lo otro nos pasa 
 
 WINSTONE:
 en winstone tenemos q usar any en el middelware y al usarlo en cada controlador tenems q definir una vriable para el todo el tiempo, ya que logger no es reconocido por ts como un objeto en request , y seria contraproducente ponerle any a todos los request y response ya que habria muchos mas any que si solo dejamos en any al valor del req del loger, ya q en este caso en el q literlamente no se reconoce el valor de logger por la request no queda de otra q usar any, aun asi es necsesario evitar su uso lo mas posible
+
+
+
+
+
+
+
+
+
+ROUTER: 
+si tenes una ruta /plants y otra /blogs (por ejemplo), y cuando haces un fetch a /plants te devuelve /blogs, tenes que ponerle mas nombres a las rutas, ej /plants/allplants, ya que express se puede confundir al poner tan pocas rutas
