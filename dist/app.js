@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = require("./utils");
 const utils_2 = require("./utils");
 const cors_1 = __importDefault(require("cors"));
-const chat_router_1 = __importDefault(require("./router/chat.router"));
+const preference_router_1 = __importDefault(require("./router/preference.router"));
 const plants_router_1 = __importDefault(require("./router/plants.router"));
 const blog_router_1 = __importDefault(require("./router/blog.router"));
 const login_router_1 = __importDefault(require("./router/login.router"));
@@ -37,7 +37,7 @@ app.use((0, cors_1.default)({
 }));
 app.use("/blogs", blog_router_1.default);
 app.use("/login", login_router_1.default);
-app.use("/chats", chat_router_1.default);
+app.use("/preferences", preference_router_1.default);
 app.use("/plants", plants_router_1.default);
 const serverExpress = app.listen(PORT, () => {
     console.log(`SERVER RUNNING ON PORT ${PORT}`);

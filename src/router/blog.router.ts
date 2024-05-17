@@ -3,8 +3,6 @@ import { postBlog , getBlogs , getBlogById , putBlog , addBlogImage , updateSect
 import adminVerify from "../middlewares/admin_token"
 
 
-console.log(" router")
-
 router.get("/allblogs" , getBlogs )
 
 

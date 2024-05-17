@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = require("../utils");
 const blog_1 = require("../controllers/blog");
 const admin_token_1 = __importDefault(require("../middlewares/admin_token"));
-console.log(" router");
 utils_1.router.get("/allblogs", blog_1.getBlogs);
 utils_1.router.get("/blog/:bid", blog_1.getBlogById);
 utils_1.router.put("/blog/update/:bid", admin_token_1.default, blog_1.putBlog);

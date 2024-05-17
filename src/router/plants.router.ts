@@ -3,8 +3,6 @@ import { getPlants , postPlants , getPlantById , putPlants , deletePlant } from 
 import  adminVerify  from "../middlewares/admin_token"
 
 
-console.log("plants router")
-
 router.get( "/allplants" , getPlants )
 
 router.get( "/plant/:pid" , getPlantById )

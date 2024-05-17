@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = require("../utils");
 const plants_1 = require("../controllers/plants");
 const admin_token_1 = __importDefault(require("../middlewares/admin_token"));
-console.log("plants router");
 utils_1.router.get("/allplants", plants_1.getPlants);
 utils_1.router.get("/plant/:pid", plants_1.getPlantById);
 utils_1.router.post("/", admin_token_1.default, plants_1.postPlants);

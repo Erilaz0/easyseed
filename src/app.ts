@@ -1,7 +1,7 @@
 import { express } from "./utils"
 import { mongoose } from "./utils"
 import cors from "cors"
-import  chatRouter from "./router/chat.router"
+import  preferencesRouter from "./router/preference.router"
 import  plantsRouter from "./router/plants.router"
 import  blogRouter from "./router/blog.router"
 import  loginRouter from "./router/login.router"
@@ -13,7 +13,6 @@ import chatServices from "./services/chat.services"
 
 
 //PASOS FALTANTES:
-//socket
 //cluster
 //dotenv - 4
 //documentacion 
@@ -46,7 +45,7 @@ app.use(cors({
 
 app.use("/blogs" , blogRouter )
 app.use("/login" , loginRouter )
-app.use("/chats" , chatRouter )
+app.use("/preferences" , preferencesRouter )
 app.use("/plants" , plantsRouter )
 
 
