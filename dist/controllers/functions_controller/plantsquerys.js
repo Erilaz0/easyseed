@@ -9,7 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleWater = exports.handlePagination = exports.handlePrice = exports.handleSort = exports.handleLight = exports.handleSpecies = void 0;
+exports.handleSpecies = handleSpecies;
+exports.handleLight = handleLight;
+exports.handleSort = handleSort;
+exports.handlePrice = handlePrice;
+exports.handlePagination = handlePagination;
+exports.handleWater = handleWater;
 const plants_service_1 = require("../../services/plants.service");
 function handleSpecies(log, species, res, page, limit) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -26,7 +31,6 @@ function handleSpecies(log, species, res, page, limit) {
         }
     });
 }
-exports.handleSpecies = handleSpecies;
 function handleLight(log, light, res, page, limit) {
     return __awaiter(this, void 0, void 0, function* () {
         log.debug(`Getting plants with ${light}`);
@@ -42,7 +46,6 @@ function handleLight(log, light, res, page, limit) {
         }
     });
 }
-exports.handleLight = handleLight;
 function handleSort(sort, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const sortPlants = yield plants_service_1.plantsService.sortPlants(sort);
@@ -54,7 +57,6 @@ function handleSort(sort, res) {
         }
     });
 }
-exports.handleSort = handleSort;
 function handlePagination(page, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const plantsPaginate = yield plants_service_1.plantsService.plantPaginate(page);
@@ -66,7 +68,6 @@ function handlePagination(page, res) {
         }
     });
 }
-exports.handlePagination = handlePagination;
 function handleWater(water, page, limit, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const query = { water: water };
@@ -79,7 +80,6 @@ function handleWater(water, page, limit, res) {
         }
     });
 }
-exports.handleWater = handleWater;
 function handlePrice(price, page, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const plantsByPrice = yield plants_service_1.plantsService.plantsByPrice(price, page);
@@ -91,4 +91,3 @@ function handlePrice(price, page, res) {
         }
     });
 }
-exports.handlePrice = handlePrice;

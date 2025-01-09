@@ -12,7 +12,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setLikesEmail = exports.deleteBlog = exports.deleteBlogImage = exports.addSection = exports.updateSection = exports.addBlogImage = exports.putBlog = exports.postBlog = exports.getBlogById = exports.getBlogs = void 0;
+exports.getBlogs = getBlogs;
+exports.getBlogById = getBlogById;
+exports.postBlog = postBlog;
+exports.putBlog = putBlog;
+exports.addBlogImage = addBlogImage;
+exports.updateSection = updateSection;
+exports.addSection = addSection;
+exports.deleteBlogImage = deleteBlogImage;
+exports.deleteBlog = deleteBlog;
+exports.setLikesEmail = setLikesEmail;
 const utils_1 = require("../utils");
 const blog_services_1 = require("../services/blog.services");
 const Validator_1 = require("../validators/Validator");
@@ -47,12 +56,10 @@ function getBlogs(req, res) {
         }
     });
 }
-exports.getBlogs = getBlogs;
 function getBlogById(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
         const id = req.params.bid;
-        console.log(id);
         if (!id || !utils_1.mongoose.Types.ObjectId.isValid(id)) {
             log.debug("Not valid bid");
             res.status(400).json({ error: "Not valid bid" });
@@ -73,7 +80,6 @@ function getBlogById(req, res) {
         }
     });
 }
-exports.getBlogById = getBlogById;
 function putBlog(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
@@ -98,7 +104,6 @@ function putBlog(req, res) {
         }
     });
 }
-exports.putBlog = putBlog;
 function deleteBlogImage(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
@@ -121,7 +126,6 @@ function deleteBlogImage(req, res) {
         }
     });
 }
-exports.deleteBlogImage = deleteBlogImage;
 function addBlogImage(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
@@ -144,12 +148,15 @@ function addBlogImage(req, res) {
         }
     });
 }
-exports.addBlogImage = addBlogImage;
 function postBlog(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
         const { title, description, images, sections } = req.body;
-        if (!title || !description || !images || !sections || sections.length === 0 || !sections[0].subtitle || !sections[0].description) {
+        console.log(` la seccion ${sections[0].subtitle}`);
+        console.log(sections[0].description);
+        console.log("caca");
+        if (!title || !description || !images || !sections || !sections[0].subtitle || !sections[0].description) {
+            log.debug("negro");
             log.debug("Complete all required fields");
             res.status(400).json({ error: "Complete all required fields" });
         }
@@ -177,7 +184,6 @@ function postBlog(req, res) {
         }
     });
 }
-exports.postBlog = postBlog;
 function updateSection(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
@@ -232,7 +238,6 @@ function updateSection(req, res) {
         }
     });
 }
-exports.updateSection = updateSection;
 function setLikesEmail(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
@@ -271,7 +276,6 @@ function setLikesEmail(req, res) {
         }
     });
 }
-exports.setLikesEmail = setLikesEmail;
 function addSection(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
@@ -295,7 +299,6 @@ function addSection(req, res) {
         }
     });
 }
-exports.addSection = addSection;
 function deleteBlog(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
@@ -318,4 +321,3 @@ function deleteBlog(req, res) {
         }
     });
 }
-exports.deleteBlog = deleteBlog;

@@ -1,4 +1,3 @@
-import chatServices from "../services/chat.services"
 import { Request , Response } from "../utils"
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 
@@ -26,11 +25,7 @@ async function createPreference( req : Request , res : Response ){
     try{
 
         const client = new MercadoPagoConfig({ accessToken: 'APP_USR-6765663660045588-051715-ebbf3a82a23cab6ef06414561ef0652a-1816034763' });
-    
         const getBody = req.body
-        console.log(getBody)
-    
-        
     
         const  body : PreferenceRequest = {
     
@@ -58,13 +53,10 @@ async function createPreference( req : Request , res : Response ){
         const preferenceID = result.id
      
         if( !getBody[0].title ){
-    
             res.status(400).json( { error : "Enought data" } )
-            console.log("no se pudo we")
     
         }
         else if( preferenceID ){
-            console.log("yayy s epudo")
             res.status(200).json( { preferenceID : preferenceID } )
         }
         else{
@@ -73,12 +65,9 @@ async function createPreference( req : Request , res : Response ){
 
     }
     catch(error){
-        console.log(error)
+        return error
     }
-
-
-
-    }
+  }
 
 
     

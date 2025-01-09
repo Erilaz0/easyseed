@@ -11,53 +11,34 @@ import  likesAdviceEmail  from "../mailing/send"
 
 async function getBlogs( req : Request , res : Response){
 
-  
-    
     const page : number = parseInt(req.query.page as string)
     const limit : number = parseInt(req.query.limit as string)
 
-    
-
     if(page && typeof page === "number" || limit && typeof limit === "number"){
-
       const log = ( req as any).logger
       const blogs = await blogServices.paginateBlog(  page , limit )
       
     
       if( !blogs ){
-           
            log.debug("Error trying to get blogs - blog.ts")
-           res.status(400).json( { error : "Cannot get blogs" } )
-         
+           res.status(400).json( { error : "Cannot get blogs" } )  
       }
       else{
            log.debug("Getting Blogs - blog.ts")
            res.status(200).send(blogs)
       }
-
-
     }else{
-
       const log = ( req as any).logger
       const blogs : blog[] = await blogServices.getBlogs()
-      
-    
       if( !blogs ){
-           
            log.debug("Error trying to get blogs - blog.ts")
            res.status(400).json( { error : "Cannot get blogs" } )
-         
       }
       else{
            log.debug("Getting Blogs - blog.ts")
            res.status(200).send(blogs)
       }
     }
-    
-    
-   
-
-    
 }
 
 
@@ -75,7 +56,6 @@ async function getBlogById( req : Request , res : Response ){
 
 const log = ( req as any).logger
 const id = req.params.bid
-console.log(id)
 
 if( !id || !mongoose.Types.ObjectId.isValid(id) ){
 
@@ -121,7 +101,6 @@ async function putBlog( req : Request , res : Response ){
     const log = ( req as any).logger
     const id = req.params.bid
     const { blog } = req.body
-    console.log(blog)
 
     
     if( !id || !mongoose.Types.ObjectId.isValid(id) ){
@@ -136,7 +115,6 @@ async function putBlog( req : Request , res : Response ){
           res.status(400).json({ error : "no updated" } )
         }
         else{
-          console.log(updateBlog)
           log.debug("Blog updated")
           res.status(200).json({ message : "updated"})
         }
@@ -248,8 +226,8 @@ async function postBlog( req : Request , res : Response ){
 const log = ( req as any).logger
 const { title , description , images , sections } = req.body
 
-if( !title || !description || !images || !sections || sections.length === 0 || !sections[0].subtitle || !sections[0].description){
-    
+if( !title || !description || !images || !sections || !sections[0].subtitle || !sections[0].description){
+  log.debug("negro")
     log.debug("Complete all required fields")
     res.status(400).json({ error : "Complete all required fields"})
 }else{

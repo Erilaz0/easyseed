@@ -27,7 +27,7 @@ router.put("/:bid/createsection/" , adminVerify , addSection )
 router.put("/:bid/setlikes/" , setLikesEmail )
 
 
-router.post("/" , adminVerify , postBlog )
+router.post("/addnewblog" , adminVerify , postBlog )
 
 
 router.delete("/:bid" , adminVerify , deleteBlog )

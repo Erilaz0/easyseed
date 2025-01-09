@@ -9,14 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPreference = void 0;
+exports.createPreference = createPreference;
 const mercadopago_1 = require("mercadopago");
 function createPreference(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const client = new mercadopago_1.MercadoPagoConfig({ accessToken: 'APP_USR-6765663660045588-051715-ebbf3a82a23cab6ef06414561ef0652a-1816034763' });
             const getBody = req.body;
-            console.log(getBody);
             const body = {
                 items: getBody.map((item) => ({
                     title: item.title,
@@ -36,10 +35,8 @@ function createPreference(req, res) {
             const preferenceID = result.id;
             if (!getBody[0].title) {
                 res.status(400).json({ error: "Enought data" });
-                console.log("no se pudo we");
             }
             else if (preferenceID) {
-                console.log("yayy s epudo");
                 res.status(200).json({ preferenceID: preferenceID });
             }
             else {
@@ -51,4 +48,3 @@ function createPreference(req, res) {
         }
     });
 }
-exports.createPreference = createPreference;

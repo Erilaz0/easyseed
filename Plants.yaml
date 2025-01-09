@@ -1,0 +1,190 @@
+openapi: "3.0.0"
+info:
+  title: "API ABM Products"
+  version: "1.0.0"
+  description: "Documentación del proyecto API ABM Products"
+components:
+  securitySchemes:
+    BearerAuth:
+      type: apiKey
+      in: cookie
+      name: token
+      description: JWT token obtained after authentication 
+  schemas:
+    Message:
+      type: object
+      properties:
+        message:
+          type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+    UpdatePlant:
+      type: object
+      properties:
+        common_name:
+          type: string
+          description: "Lily"  
+    GetPlants:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: mongoose_id
+        common_name:
+          type: string
+          description: Peace lily
+        scientific_name:
+          type: string
+          description: Spathipyllum
+        thumbnail:
+          type: array
+          items:
+            type: object
+            properties: 
+              image:
+                type: string
+            example: 
+              image: "url"
+        species:
+          type: string
+          description: Perenne
+        life_time:
+          type: number
+          description: 15
+        price:
+          type: number
+          description: 500
+        light:
+          type: string
+          description: shadow
+        water:
+          type: string
+          description: Daily
+        specials_needs:
+          type: string
+          description: The soil needs to be wet all the time
+        created_at:
+          type: string
+          description: "2024-03-06T19:41:45.846Z"
+        recommended:
+          type: boolean
+          description: true
+        stock:
+          type: number
+          description: 100
+paths:
+  /plants/allplants:
+    get:
+      summary: "Get all blogs from DB"
+      responses:
+        '200':
+          description: "Éxito al obtener los blogs"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/GetPlants'
+      "400":
+          description: "Cannot find blog by id {bid}"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:   
+                  $ref: '#components/schemas/Error'
+  /plants/plant/{pid}:
+    get:
+      summary: "Get a specific plant specified by parameters"
+      responses:
+        '200':
+          description: "Succes sending plant"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/GetPlants'
+        "400":
+          description: "Cannot find plant by id {pid}"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:   
+                  $ref: '#components/schemas/Error'
+  /plants:
+    post:
+      summary: "Create plant"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetPlants'
+      responses:
+        '200':
+          description: "Plant created"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Message'
+        "400":
+          description: "Cannot create plant"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:   
+                  $ref: '#components/schemas/Error'
+  /plants/{pid}:
+    put:
+      summary: "Update a specific plant specified by parameters"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePlant'
+      responses:
+        '200':
+          description: "Plant updated"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Message'
+        "400":
+          description: "Cannot update plant"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:   
+                  $ref: '#components/schemas/Error'
+    delete:
+      summary: "Delete a specific plant specified by parameters"
+      responses:
+        '200':
+          description: "Plant deleted"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Message'
+        "400":
+          description: "Cannot delete plant"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:   
+                  $ref: '#components/schemas/Error'
+

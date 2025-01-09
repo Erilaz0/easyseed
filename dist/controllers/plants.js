@@ -9,15 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePlant = exports.putPlants = exports.getPlantById = exports.postPlants = exports.getPlants = void 0;
+exports.getPlants = getPlants;
+exports.postPlants = postPlants;
+exports.getPlantById = getPlantById;
+exports.putPlants = putPlants;
+exports.deletePlant = deletePlant;
 const plants_service_1 = require("../services/plants.service");
 const Validator_1 = require("../validators/Validator");
 const utils_1 = require("../utils");
 const plantsquerys_1 = require("./functions_controller/plantsquerys");
 function getPlants(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log("plaaaaants");
-        console.log(req.path);
         const log = req.logger;
         const species = req.query.species;
         const light = req.query.light;
@@ -58,7 +60,6 @@ function getPlants(req, res) {
         }
     });
 }
-exports.getPlants = getPlants;
 function getPlantById(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
@@ -87,14 +88,11 @@ function getPlantById(req, res) {
         }
     });
 }
-exports.getPlantById = getPlantById;
 function postPlants(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
         const { common_name, scientific_name, thumbnail, species, life_time, price, light, water, special_needs, stock } = req.body;
         let { created_at } = req.body;
-        console.log(req.body);
-        console.log("post");
         if (!common_name || !scientific_name || !thumbnail || !species || !life_time || !price || !light || !water || !special_needs || !stock) {
             log.debug("Complete all required fields");
             return res.status(400).json({ message: "Complete all required fields" });
@@ -129,7 +127,6 @@ function postPlants(req, res) {
         }
     });
 }
-exports.postPlants = postPlants;
 function putPlants(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
@@ -169,7 +166,6 @@ function putPlants(req, res) {
         }
     });
 }
-exports.putPlants = putPlants;
 function deletePlant(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
@@ -192,4 +188,3 @@ function deletePlant(req, res) {
         }
     });
 }
-exports.deletePlant = deletePlant;

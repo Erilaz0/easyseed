@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SYSTEM = void 0;
+exports.SYSTEM = SYSTEM;
 const commander_1 = require("commander");
 function SYSTEM() {
     const program = new commander_1.Command();
@@ -10,4 +10,3 @@ function SYSTEM() {
     const option = program.opts();
     return option.ENVIROMENT;
 }
-exports.SYSTEM = SYSTEM;

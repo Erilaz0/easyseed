@@ -1,0 +1,4 @@
+{
+  "name": "Aloe Vera",
+  "type": "Succulent"
+}

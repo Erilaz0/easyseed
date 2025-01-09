@@ -7,17 +7,8 @@ import { handleSpecies , handleLight , handleSort, handlePrice, handlePagination
 
 
 
-
-
-
-
-
-
-
 async function getPlants( req : Request  , res : Response ){
 
-console.log("plaaaaants")
-console.log(req.path)
   const log = ( req as any ).logger
   
   const species = req.query.species
@@ -81,7 +72,6 @@ console.log(req.path)
       res.status(400).json({ message : "cannot get plants" })
 
     }else{
-
       log.debug("Sending all plants as JSON data")
       res.status(200).send(plants)
 
@@ -154,8 +144,6 @@ async function postPlants( req : Request , res : Response ){
 const log = ( req as any ).logger
 const { common_name , scientific_name , thumbnail , species , life_time , price , light , water , special_needs , stock } = req.body
 let { created_at } = req.body
-console.log(req.body)
-console.log("post")
  
 
 

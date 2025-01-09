@@ -12,7 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.server_data = exports.login = void 0;
+exports.login = login;
+exports.server_data = server_data;
 const generaJWT_1 = __importDefault(require("../functions/generaJWT"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 function login(req, res) {
@@ -27,7 +28,7 @@ function login(req, res) {
             const token = (0, generaJWT_1.default)(encodedSecret);
             const horasEnMilisegundos = 60 * 60 * 1000;
             const expirationTime = new Date(Date.now() + horasEnMilisegundos);
-            res.cookie(adminCookie, token, { expires: expirationTime, httpOnly: false });
+            res.cookie(adminCookie, token, { expires: expirationTime, httpOnly: true });
             res.status(200).json({ Authorized: "LOGGED AS ADMIN" });
         }
         else {
@@ -35,10 +36,8 @@ function login(req, res) {
         }
     });
 }
-exports.login = login;
 function server_data(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         res.status(200).send("yes");
     });
 }
-exports.server_data = server_data;

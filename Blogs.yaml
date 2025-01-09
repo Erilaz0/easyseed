@@ -1,0 +1,364 @@
+openapi: "3.0.0"
+info:
+  title: "API ABM Products"
+  version: "1.0.0"
+  description: "Documentación del proyecto API ABM Products"
+components:
+  securitySchemes:
+    BearerAuth:
+      type: apiKey
+      in: cookie
+      name: token
+      description: JWT token obtained after authentication 
+  schemas:
+    Update:
+      type: object
+      properties:
+        title:
+          type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+    NewUrl:
+      type: object
+      properties:
+        NewUrl:
+          type: object
+          properties: 
+            image: 
+              type: string
+          example:
+            image: "url"
+    Section:
+      type: object
+      properties:
+        section:
+          type: object
+          properties: 
+            subtitle: 
+              type: string
+          example:
+            subtitle: "Learn about the peace lily and its care"
+    Setlikes:
+      type: object
+      properties:
+        data:
+          type: object
+          properties: 
+            email: 
+              type: string
+          example:
+            email: "Example@gmail.com"
+    AddSection:
+      type: object
+      properties:
+        section:
+          type: object
+          properties: 
+            subtitle: 
+              type: string
+              example: "Learn about the peace lily and its care"
+            description: 
+              type: string
+              example: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+            image:
+              type: string
+              example: "https://image.com/"
+    Message:
+      type: object
+      properties:
+        message:
+          type: string
+    Blog:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Blog mongoose ID
+        title:
+          type: string
+          description: Blog title.
+        images:
+          type: array
+          items:
+            type: object
+            properties: 
+              image:
+                type: string
+            example: 
+              image: "url"
+        description:
+          type: string
+          description: Blog description.
+        sections:
+          type: array
+          items:
+            type: object
+            properties: 
+              image:
+                type: string
+              subtitle:
+                type: string
+              description: 
+                type: string
+              _id:
+                type: string
+        published: 
+          type: boolean
+        date:
+          type: string
+        likes:
+          type: array
+          items:
+            type: object
+            properties:
+              emails:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    email: 
+                      type: string
+              quantity:
+                type: number
+
+paths:
+  /blogs/allblogs:
+    get:
+      summary: "Get all blogs from DB"
+      responses:
+        '200':
+          description: "Success sending all blogs"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Blog'
+        "400":
+          description: "Cannot get blogs from DB"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Error'
+
+  /blogs/blog/{bid}:
+    get:
+      summary: "Get a specific blog specified by parameters"
+      responses:
+        '200':
+          description: "Success ,sending blog by id { bid }"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Blog'
+        "400":
+          description: "Cannot find blog by id {bid}"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Error'
+  /blogs/blog/update/{bid}:
+    put:
+      summary: "Update a specific blog specified by parameters"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Update'
+      responses:
+        '200':
+          description: "Blog Updated"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Message'
+        "400":
+          description: "Cannot find blog by id {bid}"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:   
+                  $ref: '#components/schemas/Error'
+  /blogs/{bid}/image/{mid}:
+    put:
+      summary: "Delete a specific blog image specified by parameters"
+      responses:
+        '200':
+          description: "Blog Image deleted"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Message'
+        "400":
+          description: "Cannot find blog by id {bid}"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:   
+                  $ref: '#components/schemas/Error'
+  /blogs/addimage/{bid}:
+    put:
+      summary: "Add blog image"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUrl'
+      responses:
+        '200':
+          description: "Blog Image updated"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Message'
+        "400":
+          description: "Cannot find blog by id {bid}"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:   
+                  $ref: '#components/schemas/Error'
+  /blogs/{bid}/section/{sid}:
+    put:
+      summary: "Update blog section"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Section'
+      responses:
+        '200':
+          description: "Blog section updated"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Message'
+        "400":
+          description: "Cannot find blog by id {bid}"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:   
+                  $ref: '#components/schemas/Error'
+  /blogs/{bid}/createsection/:
+    put:
+      summary: "Add blog section"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddSection'
+      responses:
+        '200':
+          description: "Blog section added successfully"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Message'
+        "400":
+          description: "Cannot create section"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:   
+                  $ref: '#components/schemas/Error'
+  /blogs/{bid}/setlikes/:
+    put:
+      summary: "Add likes to a specified blog using parameters"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Setlikes'
+      responses:
+        '200':
+          description: "Blog likes updated successfully"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Message'
+        "400":
+          description: "Cannot add likes"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:   
+                  $ref: '#components/schemas/Error'
+  /blogs/addnewblog:
+    post:
+      summary: "Create new blog"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Blog'
+      responses:
+        '200':
+          description: "Blog created successfully"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Message'
+        "400":
+          description: "Cannot create blog"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:   
+                  $ref: '#components/schemas/Error'
+  /blogs/{bid}:
+    delete:
+      summary: "Delete one blog specified by parameters"
+      responses:
+        '200':
+          description: "Blog deleted successfully"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Message'
+        "400":
+          description: "Cannot delete blog"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:   
+                  $ref: '#components/schemas/Error'
