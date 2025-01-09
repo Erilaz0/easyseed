@@ -46,6 +46,6 @@ app.use("/api-docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.de
 const serverExpress = app.listen(PORT, () => {
     console.log(`SERVER RUNNING ON PORT ${PORT}`);
 });
-utils_2.mongoose.connect("mongodb+srv://pandemonio278:urSUGuba7ana4gh3@cow.s8nlm84.mongodb.net")
+utils_2.mongoose.connect( process.env.MONGO_URL )
     .then(res => { console.log("Database conected"); })
     .catch(() => { console.log("error"); });

@@ -22,8 +22,8 @@ function login(req, res) {
         const username = body.username;
         const password = body.password;
         if (username && typeof username === "string" && username === "admin" && password && typeof password === "string" && password === "admin") {
-            const adminCookie = "7W6e7B4zcchemj4A3evh9FhYLXzZ7CSL5v9h6664YCdAhK8W52_id";
-            const secretToken = "u5Kn66S2DA9iq7Fxx2gHH2mtn6wkA22Z792QHkq6VjAb96BZvQ-kX2khMGJ5h6WeMTLN8g828j6P52ajFnH7E6fb856t3cGfz8DN-Mej7xX78D7Q7eH97iKmeaY789ReYr9T8PnJLe57SNhJd33c2ev";
+            const adminCookie = process.env.adminCookie;
+            const secretToken = process.env.secretToken;
             const encodedSecret = yield bcrypt_1.default.hash(secretToken, 10);
             const token = (0, generaJWT_1.default)(encodedSecret);
             const horasEnMilisegundos = 60 * 60 * 1000;

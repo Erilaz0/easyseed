@@ -16,8 +16,8 @@ const utils_1 = require("../utils");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 function adminVerify(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        const adminCookie = req.cookies["7W6e7B4zcchemj4A3evh9FhYLXzZ7CSL5v9h6664YCdAhK8W52_id"];
-        const secret = "32bSg3H73R7antXUpVs234-i43p43arF6BG9F69bPvaf94gRuTdN8uFvhvM9ZS9jYD5P96Xu8";
+        const adminCookie = req.cookies[ process.env.adminCookie ];
+        const secret = process.env.secret;
         const log = req.logger;
         log.debug("Starting token validation..");
         log.debug(adminCookie);

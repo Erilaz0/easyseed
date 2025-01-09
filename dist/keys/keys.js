@@ -1,0 +1,1 @@
+const _adminCookie = process.env.adminCookie
