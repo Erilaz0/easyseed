@@ -44,7 +44,7 @@ function createPreference(req, res) {
             }
         }
         catch (error) {
-            console.log(error);
+            const e = error;
         }
     });
 }

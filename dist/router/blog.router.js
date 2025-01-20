@@ -14,6 +14,6 @@ utils_1.router.put("/addimage/:bid", admin_token_1.default, blog_1.addBlogImage)
 utils_1.router.put("/:bid/section/:sid", admin_token_1.default, blog_1.updateSection);
 utils_1.router.put("/:bid/createsection/", admin_token_1.default, blog_1.addSection);
 utils_1.router.put("/:bid/setlikes/", blog_1.setLikesEmail);
-utils_1.router.post("/addnewblog", admin_token_1.default, blog_1.postBlog);
+utils_1.router.post("/", admin_token_1.default, blog_1.postBlog);
 utils_1.router.delete("/:bid", admin_token_1.default, blog_1.deleteBlog);
 exports.default = utils_1.router;

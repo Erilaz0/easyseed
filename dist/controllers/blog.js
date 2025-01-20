@@ -85,7 +85,6 @@ function putBlog(req, res) {
         const log = req.logger;
         const id = req.params.bid;
         const { blog } = req.body;
-        console.log(blog);
         if (!id || !utils_1.mongoose.Types.ObjectId.isValid(id)) {
             log.debug("Not valid BID");
             res.status(400).json({ error: "Not valid BID" });
@@ -97,7 +96,6 @@ function putBlog(req, res) {
                 res.status(400).json({ error: "no updated" });
             }
             else {
-                console.log(updateBlog);
                 log.debug("Blog updated");
                 res.status(200).json({ message: "updated" });
             }
@@ -152,11 +150,7 @@ function postBlog(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const log = req.logger;
         const { title, description, images, sections } = req.body;
-        console.log(` la seccion ${sections[0].subtitle}`);
-        console.log(sections[0].description);
-        console.log("caca");
-        if (!title || !description || !images || !sections || !sections[0].subtitle || !sections[0].description) {
-            log.debug("negro");
+        if (!title || !description || !images || !sections || sections.length === 0 || !sections[0].subtitle || !sections[0].description) {
             log.debug("Complete all required fields");
             res.status(400).json({ error: "Complete all required fields" });
         }

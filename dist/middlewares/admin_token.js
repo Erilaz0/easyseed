@@ -16,21 +16,21 @@ const utils_1 = require("../utils");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 function adminVerify(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        const adminCookie = req.cookies[ process.env.adminCookie ];
-        const secret = process.env.secret;
+        const adminCookieName = process.env.adminCookie || "";
+        const adminCookie = req.cookies[adminCookieName];
+        const secret = process.env.secret || "";
         const log = req.logger;
         log.debug("Starting token validation..");
         log.debug(adminCookie);
         utils_1.jwt.verify(adminCookie, secret, (error, credentials) => __awaiter(this, void 0, void 0, function* () {
             if (error) {
-                console.log(error);
                 log.debug("\u2716  Invalid token");
                 res.status(400).json({ error: "Invalid token" });
             }
             else {
                 log.debug("\u2714  Token validated, starting second validation...");
-                const key = "u5Kn66S2DA9iq7Fxx2gHH2mtn6wkA22Z792QHkq6VjAb96BZvQ-kX2khMGJ5h6WeMTLN8g828j6P52ajFnH7E6fb856t3cGfz8DN-Mej7xX78D7Q7eH97iKmeaY789ReYr9T8PnJLe57SNhJd33c2ev";
-                const verifyCredentials = yield bcrypt_1.default.compare(key, credentials.code);
+                const secretToken = process.env.secretToken || "";
+                const verifyCredentials = yield bcrypt_1.default.compare(secretToken, credentials.code);
                 if (verifyCredentials === true) {
                     log.debug("\u2714  All credentials match , ending hash validation...");
                     next();

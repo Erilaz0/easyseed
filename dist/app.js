@@ -12,21 +12,7 @@ const blog_router_1 = __importDefault(require("./router/blog.router"));
 const login_router_1 = __importDefault(require("./router/login.router"));
 const winstone_1 = require("./middlewares/winstone");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
-const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const path = require("path");
-const options = {
-    definition: {
-        openapi: "3.0.0",
-        info: {
-            title: "api abm products",
-            version: "1.0.0",
-            description: "documentacion del proyecto api abm products"
-        }
-    },
-    apis: ["./*.yaml"]
-};
-const specs = (0, swagger_jsdoc_1.default)(options);
 const PORT = 8080;
 const app = (0, utils_1.express)();
 app.use(utils_1.express.json());
@@ -42,10 +28,10 @@ app.use("/blogs", blog_router_1.default);
 app.use("/login", login_router_1.default);
 app.use("/preferences", preference_router_1.default);
 app.use("/plants", plants_router_1.default);
-app.use("/api-docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(specs));
 const serverExpress = app.listen(PORT, () => {
     console.log(`SERVER RUNNING ON PORT ${PORT}`);
 });
-utils_2.mongoose.connect( process.env.MONGO_URL )
+const url_mongodb = process.env.MONGO_URL || "";
+utils_2.mongoose.connect(url_mongodb)
     .then(res => { console.log("Database conected"); })
     .catch(() => { console.log("error"); });
