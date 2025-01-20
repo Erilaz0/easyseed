@@ -23,9 +23,11 @@ function login(req, res) {
         const password = body.password;
         if (username && typeof username === "string" && username === "admin" && password && typeof password === "string" && password === "admin") {
             const adminCookie = process.env.adminCookie;
+            console.log(adminCookie);
             const secretToken = process.env.secretToken;
             const encodedSecret = yield bcrypt_1.default.hash(secretToken, 10);
             const token = (0, generaJWT_1.default)(encodedSecret);
+            console.log(token);
             const horasEnMilisegundos = 60 * 60 * 1000;
             const expirationTime = new Date(Date.now() + horasEnMilisegundos);
             res.cookie(adminCookie, token, { expires: expirationTime, httpOnly: true });
