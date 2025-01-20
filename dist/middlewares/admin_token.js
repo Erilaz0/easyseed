@@ -23,6 +23,9 @@ function adminVerify(req, res, next) {
         log.debug("Starting token validation..");
         log.debug(adminCookie);
         utils_1.jwt.verify(adminCookie, secret, (error, credentials) => __awaiter(this, void 0, void 0, function* () {
+            console.log("yay");
+            console.log(adminCookie);
+            console.log("yay");
             if (error) {
                 log.debug("\u2716  Invalid token");
                 res.status(400).json({ error: "Invalid token" });
