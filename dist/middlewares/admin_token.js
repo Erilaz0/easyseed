@@ -16,16 +16,13 @@ const utils_1 = require("../utils");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 function adminVerify(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        const adminCookieName = process.env.adminCookie || "";
+        const adminCookieName = process.env.adminCookie || "admin";
         const adminCookie = req.cookies[adminCookieName];
         const secret = process.env.secret || "";
         const log = req.logger;
         log.debug("Starting token validation..");
         log.debug(adminCookie);
         utils_1.jwt.verify(adminCookie, secret, (error, credentials) => __awaiter(this, void 0, void 0, function* () {
-            console.log("yay");
-            console.log(adminCookie);
-            console.log("yay");
             if (error) {
                 log.debug("\u2716  Invalid token");
                 res.status(400).json({ error: "Invalid token" });
