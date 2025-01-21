@@ -29,7 +29,7 @@ function login(req, res) {
             const horasEnMilisegundos = 60 * 60 * 1000;
             const expirationTime = new Date(Date.now() + horasEnMilisegundos);
             try {
-                res.cookie(adminCookie, token, { expires: expirationTime, httpOnly: true });
+                res.cookie(adminCookie, token, { expires: expirationTime, httpOnly: true, secure: true });
             }
             catch (error) {
                 console.log(error);
