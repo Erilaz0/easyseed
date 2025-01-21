@@ -26,6 +26,7 @@ function adminVerify(req, res, next) {
             if (error) {
                 log.debug("\u2716  Invalid token");
                 res.status(400).json({ error: "Invalid token" });
+                console.log(error);
             }
             else {
                 log.debug("\u2714  Token validated, starting second validation...");
@@ -37,6 +38,7 @@ function adminVerify(req, res, next) {
                 }
                 else {
                     log.debug("\u2716  Cant validate hash");
+                    console.log("ERROR");
                     res.status(400).json({ error: "Invalid key" });
                 }
             }
