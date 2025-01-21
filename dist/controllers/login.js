@@ -28,7 +28,12 @@ function login(req, res) {
             const token = (0, generaJWT_1.default)(encodedSecret);
             const horasEnMilisegundos = 60 * 60 * 1000;
             const expirationTime = new Date(Date.now() + horasEnMilisegundos);
-            res.cookie("a", "a");
+            try {
+                res.cookie(adminCookie, token, { expires: expirationTime, httpOnly: true, sameSite: "strict" });
+            }
+            catch (error) {
+                console.log(error);
+            }
             res.status(200).json({ Authorized: "LOGGED AS ADMIN" });
         }
         else {
