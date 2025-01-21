@@ -30,6 +30,7 @@ function login(req, res) {
             const expirationTime = new Date(Date.now() + horasEnMilisegundos);
             try {
                 res.cookie(adminCookie, token, { expires: expirationTime, httpOnly: true, sameSite: "strict" });
+                console.log("ccc");
             }
             catch (error) {
                 console.log(error);
